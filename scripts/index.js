@@ -32,9 +32,12 @@ form.addEventListener('submit', (event) => {
 });
 
 root.addEventListener('click', ({ target }) => {
-	if (target.id !== 'read') return;
-
-	library[target.dataset.index].isRead = !library[target.dataset.index].isRead;
+	if (target.id === 'read') {
+		library[target.dataset.index].isRead = !library[target.dataset.index].isRead;
+	} else if (target.classList.contains('delete')) {
+		library.splice(target.dataset.index, 1);
+	}
+	console.log(library);
 	render();
 });
 
@@ -89,6 +92,12 @@ function render() {
 		listItem2.appendChild(document.createTextNode(' Yes'));
 		list.appendChild(listItem2);
 		itemBody.appendChild(list);
+
+		const deleteButton = document.createElement('button');
+		deleteButton.classList.add('delete');
+		deleteButton.appendChild(document.createTextNode('Delete'));
+		itemBody.appendChild(deleteButton);
+
 		item.appendChild(itemBody);
 
 		root.appendChild(item);
